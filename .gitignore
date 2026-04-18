@@ -27,8 +27,9 @@ env/
 
 # Environment variables
 .env
-.env.*
+.env.[!e]*
 *.env
+!.env.example
 
 # IDE
 .vscode/
