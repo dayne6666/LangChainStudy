@@ -1,7 +1,7 @@
 """
 模型调用测试
 """
-from models.init_llm import deepseek_llm, ark_llm
+from init_llm import deepseek_llm, ark_llm
 
 print(deepseek_llm.invoke("请介绍一下你自己"))
 print(ark_llm.invoke("请介绍一下你自己"))
