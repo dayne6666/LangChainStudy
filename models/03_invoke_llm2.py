@@ -7,20 +7,20 @@
 3. Batch Invoke
 """
 
-from init_llm import deepseek_llm
+from init_llm import deepseek_llm, ark_llm
 
 # 3. Batch Invoke
 
-resp = deepseek_llm.batch([
-    "请介绍一下你自己",
-    "飞机为什么会飞",
-    "什么是大模型",
-])
+# resp = ark_llm.batch([
+#     "请介绍一下你自己",
+#     "飞机为什么会飞",
+#     "什么是大模型",
+# ])
 #
 # for item in resp:
 #     print(item.content)
 
-resp = deepseek_llm.batch_as_completed([
+resp = ark_llm.batch_as_completed([
     "请介绍一下你自己",
     "飞机为什么会飞",
     "什么是大模型",
@@ -36,7 +36,7 @@ for item in resp:
 
 
 # 2. Stream Invoke
-# response = deepseek_llm.stream("请介绍一下你自己")
+# response = ark_llm.stream("请介绍一下你自己")
 # for chunk in response:
 #     print(chunk.content, end="|", flush=True)
 
@@ -56,7 +56,7 @@ for item in resp:
 
 # 1. Invoke
 #单条消息调用模型
-# resp = deepseek_llm.invoke("请介绍一下你自己")
+# resp = ark_llm.invoke("请介绍一下你自己")
 # print(type(resp))
 # print(resp.content)
 
@@ -67,14 +67,14 @@ for item in resp:
 #     {"role": "assistant", "content": "I like programming."},
 #     {"role": "user", "content": "翻译：我喜欢大模型"},
 # ]
-
-# resp = deepseek_llm.invoke(conversations)
+#
+# resp = ark_llm.invoke(conversations)
 # print(type(resp))
 # print(resp)
 # print(resp.content)
 
 
-# 消息对象格式的消息列表
+# 消息对象格式的消息列表,推荐使用
 # from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 #
 # conversations = [
@@ -84,7 +84,7 @@ for item in resp:
 #     HumanMessage(content="翻译：我喜欢大模型"),
 # ]
 #
-# resp = deepseek_llm.invoke(conversations)
+# resp = ark_llm.invoke(conversations)
 # print(type(resp))
 # print(resp)
 # print(resp.content)
