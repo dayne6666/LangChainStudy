@@ -4,7 +4,7 @@ from langchain.agents import create_agent
 from langchain.tools import tool
 from langgraph.graph.state import CompiledStateGraph
 
-from init_llm import deepseek_llm
+from init_llm import deepseek_llm, ark_llm
 
 
 # 1. 定义工具
@@ -77,7 +77,7 @@ def create_travel_agent() -> CompiledStateGraph:
     """创建旅行规划智能体"""
     # 创建智能体
     agent = create_agent(
-        model=deepseek_llm,
+        model=ark_llm,
         tools=[get_weather, get_transport_info, get_scenic_spots],
         system_prompt="你是一个专业的旅行规划助手，能够帮助用户查询天气、交通和景点信息。拒绝回答与旅行规划无关的问题。",
     )
