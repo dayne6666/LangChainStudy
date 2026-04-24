@@ -4,7 +4,8 @@ from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy
 from pydantic import BaseModel, Field
 
-from init_llm import deepseek_llm
+from init_llm import deepseek_llm, ark_llm
+
 
 class PersonInfo(BaseModel):
     name: str = Field(description="姓名")
@@ -17,7 +18,7 @@ class EventInfo(BaseModel):
     dt:str = Field(description="活动时间")
 
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     system_prompt="你是一个专业的信息提取助手",
     response_format=ToolStrategy(
         Union[PersonInfo,EventInfo],

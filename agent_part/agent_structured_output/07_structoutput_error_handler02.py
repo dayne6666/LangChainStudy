@@ -5,7 +5,7 @@ from langchain.agents.structured_output import ToolStrategy, StructuredOutputVal
     MultipleStructuredOutputsError
 from langchain_core.messages import SystemMessage
 
-from init_llm import deepseek_llm
+from init_llm import deepseek_llm, ark_llm
 
 
 # 自定义错误处理函数
@@ -33,7 +33,7 @@ class ProductEvaluation(BaseModel):
 
 # 创建agent
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     tools=[],
     # 创建会诱导错误的系统提示
     system_prompt=SystemMessage(content="""
