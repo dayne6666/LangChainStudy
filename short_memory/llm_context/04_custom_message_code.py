@@ -7,7 +7,7 @@ from langgraph.graph.message import REMOVE_ALL_MESSAGES
 from langgraph.runtime import Runtime
 from langchain_core.messages import SystemMessage
 
-from init_llm import deepseek_llm, tongyi_llm
+from init_llm import ark_llm
 
 
 @tool
@@ -84,7 +84,7 @@ def custom_summarizer(state: AgentState, runtime) -> dict | None:
 
     try:
         # 调用模型生成摘要
-        summary_response = tongyi_llm.invoke(summary_prompt)
+        summary_response = ark_llm.invoke(summary_prompt)
         summary_content = f"对话摘要: {summary_response.content}"
 
         # 创建摘要消息
@@ -106,7 +106,7 @@ def custom_summarizer(state: AgentState, runtime) -> dict | None:
 
 
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     tools=[get_weather],
     middleware=[print_before_model_state, custom_summarizer],
     checkpointer=InMemorySaver(),
