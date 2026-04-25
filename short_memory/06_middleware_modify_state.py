@@ -9,7 +9,7 @@ from langgraph.prebuilt import ToolRuntime
 from langgraph.runtime import Runtime
 from langgraph.types import Command
 
-from init_llm import deepseek_llm
+from init_llm import ark_llm
 
 
 @tool
@@ -46,7 +46,7 @@ class CustomState(AgentState):
 
 
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     tools=[get_weather],
     middleware=[before_model,after_model],
     checkpointer=InMemorySaver(),
