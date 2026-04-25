@@ -4,7 +4,7 @@ from langchain.agents import create_agent
 from langchain_core.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 
-from init_llm import deepseek_llm
+from init_llm import ark_llm
 
 
 @tool
@@ -45,7 +45,7 @@ def get_current_promotions() -> Dict[str, Any]:
     }
 
 agent = create_agent(
-    model = deepseek_llm,
+    model = ark_llm,
     system_prompt="你是一个客户服务助手，负责回答客户关于订单、促销活动等问题。",
     tools=[query_customer_data, check_order_history, get_current_promotions],
     checkpointer= InMemorySaver()# 可以将状态保存到内存、数据库等
@@ -56,7 +56,13 @@ config= {"configurable": {"thread_id": "xxx"}}
 for chunk in agent.stream(
         {"messages": [{"role": "user", "content": "查询客户ID为12345的完整信息和可用优惠活动"}]},
         config=config,
-        stream_mode="checkpoints"
+        # stream_mode="values" #每一步都输出完整状态
+        # stream_mode="updates" #每一步只输出增量状态 默认模式
+        # stream_mode="messages" #按token输出 （打字机效果）
+        #stream_mode="tasks" #按任务形式输出，多了任务信息
+        #="debug" #和task 类似，多了时间戳等信息
+        #stream_mode="checkpoints" #当检查点被创建时会触发输出 输出包含检查点中的状态
+        stream_mode="checkpoints" #当检查点被创建时会触发输出 输出包含检查点中的状态
 ):
     print(chunk)
     print("-"*50)

@@ -1,13 +1,11 @@
 from langchain.agents import create_agent
-from langchain.tools import tool
 from langchain_core.stores import InMemoryStore
 from langgraph.checkpoint.memory import InMemorySaver
-from langgraph.graph.state import CompiledStateGraph
 
-from init_llm import deepseek_llm
+from init_llm import  ark_llm
 
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     tools=[],
     checkpointer=InMemorySaver(),
     store=InMemoryStore()
@@ -20,5 +18,5 @@ resp1 = agent.invoke( {"messages": [{"role": "user", "content": "我叫张三，
 print(resp1["messages"][-1].content)
 
 print("+++++"*30)
-resp2 = agent.invoke( {"messages": [{"role": "user", "content": "我叫什么名字？"}]}, config=config2)
+resp2 = agent.invoke( {"messages": [{"role": "user", "content": "我叫什么名字？"}]}, config=config1)
 print(resp2["messages"][-1].content)
