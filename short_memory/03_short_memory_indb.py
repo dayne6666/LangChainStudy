@@ -25,7 +25,7 @@ def get_user_info(name: str) -> str:
     return f"姓名: {name}, 年龄: {info['age']}岁, 爱好: {info['hobby']}"
 
 
-DB_URI = MYSQL_CONNECTION_BASE + "/langchain_db?charset=utf8mb4"
+DB_URI = MYSQL_CONNECTION_BASE + "langchain_db?charset=utf8mb4"
 
 with PyMySQLSaver.from_conn_string(DB_URI) as checkpointer:
     # 创建表
