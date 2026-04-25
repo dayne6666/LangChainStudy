@@ -8,7 +8,7 @@ from langgraph.runtime import Runtime
 from pydantic import BaseModel, Field
 from typing import Dict, Any, Union
 
-from init_llm import deepseek_llm
+from init_llm import ark_llm
 
 
 # 1. 定义Agent格式化返回结构
@@ -25,6 +25,7 @@ class InventoryQueryResult(BaseModel):
     product_name: str  # 商品名称
     stock_quantity: int  # 库存数量
 
+
 # 2. 模拟数据库数据
 MOCK_DATABASE = {
     "orders": {
@@ -34,9 +35,9 @@ MOCK_DATABASE = {
 
     },
     "inventory": {
-        "华为手机": InventoryQueryResult(product_name="华为手机",stock_quantity=50),
-        "苹果电脑": InventoryQueryResult(product_name="苹果电脑",stock_quantity=20),
-        "三星显示器": InventoryQueryResult(product_name="三星显示器",stock_quantity=30)
+        "华为手机": InventoryQueryResult(product_name="华为手机", stock_quantity=50),
+        "苹果电脑": InventoryQueryResult(product_name="苹果电脑", stock_quantity=20),
+        "三星显示器": InventoryQueryResult(product_name="三星显示器", stock_quantity=30)
     }
 }
 
@@ -81,7 +82,7 @@ def get_product_inventory(runtime: ToolRuntime) -> InventoryQueryResult:
 
 # 5. 中间件，模型调用完成后，从结构化输出中提取商品名称设置到状态中
 @after_model
-def manage_order_state(state: AgentState,runtime: Runtime) -> Dict[str, Any] | None:
+def manage_order_state(state: AgentState, runtime: Runtime) -> Dict[str, Any] | None:
     print("state:", state)
 
     # 如果state中没有结构化响应，直接返回None
@@ -101,7 +102,7 @@ def manage_order_state(state: AgentState,runtime: Runtime) -> Dict[str, Any] | N
 
 # 6. 创建 Agent
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     tools=[get_order_info, get_product_inventory],
     response_format=ToolStrategy(Union[OrderQueryResult, InventoryQueryResult]),
     middleware=[manage_order_state],
@@ -113,20 +114,20 @@ agent = create_agent(
 config = {"configurable": {"thread_id": "user_001"}}
 
 # 创建订单测试
-response1 = agent.invoke({"messages": [{"role": "user", "content": "查询订单order_001信息"}]},config=config)
-print("response1:", response1["structured_response"])
+response1 = agent.invoke({"messages": [{"role": "user", "content": "查询订单order_001信息"}]}, config=config)
+print("response1:", response1)
 print("***" * 20)
 
 # 查询订单测试
-response2 = agent.invoke({"messages": [{"role": "user", "content": "这个订单中商品库存是多少"}]},config=config)
+response2 = agent.invoke({"messages": [{"role": "user", "content": "这个订单中商品库存是多少"}]}, config=config)
 print("response2:", response2["structured_response"])
 print("***" * 20)
 
-response3 = agent.invoke({"messages": [{"role": "user", "content": "查询订单order_002信息"}]},config=config)
+response3 = agent.invoke({"messages": [{"role": "user", "content": "查询订单order_002信息"}]}, config=config)
 print("response3:", response3["structured_response"])
 print("***" * 20)
 
-response4 = agent.invoke({"messages": [{"role": "user", "content": "商品库存是多少"}]},config=config)
+response4 = agent.invoke({"messages": [{"role": "user", "content": "商品库存是多少"}]}, config=config)
 print("response4:", response4["structured_response"])
 print("***" * 20)
 
