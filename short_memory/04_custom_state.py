@@ -1,10 +1,8 @@
 from langchain.agents import create_agent, AgentState
-from langchain_core.stores import InMemoryStore
 from langchain_core.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
-from langgraph.checkpoint.mysql.pymysql import PyMySQLSaver
 
-from init_llm import deepseek_llm
+from init_llm import  ark_llm
 
 """
 自定义状态步骤：
@@ -40,7 +38,7 @@ class CustomState(AgentState):
     other_info: dict
 
 agent = create_agent(
-    model=deepseek_llm,
+    model=ark_llm,
     tools=[get_user_info],
     checkpointer=InMemorySaver(),
     state_schema=CustomState
