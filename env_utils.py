@@ -12,3 +12,7 @@ DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL")
 # 加载火山环境变量
 ARK_API_KEY = os.getenv("ARK_API_KEY")
 ARK_BASE_URL = os.getenv("ARK_BASE_URL")
+
+
+# 加载 MySQL 连接
+MYSQL_CONNECTION_BASE = os.getenv("MYSQL_CONNECTION_BASE")
