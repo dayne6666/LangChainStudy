@@ -6,6 +6,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langchain_core.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.types import Command
 
 from init_llm import llm_xiaomi
 
@@ -58,7 +59,7 @@ result = agent.invoke({
 
 print(result)
 
-#获取中断信息
+# 获取中断信息
 if result.interrupts:
     req = result.interrupts[0].value['action_requests'][0]
     print(f"待确认执行的工具：{req['name']}")
@@ -66,5 +67,16 @@ if result.interrupts:
     print(f"描述：{req['description']}")
     allowed_decisions = result.interrupts[0].value['review_configs'][0]['allowed_decisions']
     print(f"用户可以确认的操作：{allowed_decisions}")
+
+    print("----------------------")
+    result2 = agent.invoke(
+        Command(resume={"decisions": [{"type": "approve"}]}),
+        config=config,
+        version="v2"
+    )
+    print(result2.value['messages'][-1].content)
 else:
     print(result.value['messages'][-1].content)
+
+
+
