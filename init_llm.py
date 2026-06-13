@@ -3,8 +3,9 @@ init_chat_model 初始化聊天模型
 """
 from langchain.chat_models import init_chat_model
 from langchain_core.language_models import BaseChatModel
+from langchain_openai import ChatOpenAI
 
-from env_utils import DEEPSEEK_BASE_URL, DEEPSEEK_API_KEY, ARK_API_KEY, ARK_BASE_URL
+from env_utils import DEEPSEEK_BASE_URL, DEEPSEEK_API_KEY, ARK_API_KEY, ARK_BASE_URL, XIAOMI_API_KEY, XIAOMI_BASE_URL
 
 # deepseek_llm: BaseChatModel = init_chat_model(
 #     model="deepseek-chat",
@@ -25,6 +26,13 @@ ark_llm = init_chat_model(
     model_provider="openai",
     api_key=ARK_API_KEY,
     base_url=ARK_BASE_URL,
+)
+
+llm_xiaomi = ChatOpenAI(
+    model="mimo-v2.5",
+    temperature=1.0,
+    openai_api_key=XIAOMI_API_KEY,
+    openai_api_base=XIAOMI_BASE_URL,
 )
 #
 # anthropic_llm = init_chat_model(
